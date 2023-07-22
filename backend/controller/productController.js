@@ -67,7 +67,7 @@ exports.getProductsOfDepartment = async (req,res) => {
 
 exports.getquantity = async (req,res) => {
     try{
-        const response = await Product.find({name: req.params.pname},{stock:1,_id:0});
+        const response = await Product.findOne({name: req.params.pname},{stock:1,_id:0});
         res.json(response);
     } catch(err) {
         console.log(err);

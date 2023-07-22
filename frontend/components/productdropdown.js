@@ -9,18 +9,18 @@ import axios from 'axios';
 
 const DropdownComponent = () => {
 
-  const { items,setStock } = React.useContext(transferContext);
+  const { items, setStock } = React.useContext(transferContext);
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   console.log(items);
 
   const handleQuantity = async () => {
-    try{
-      if(value?.length) {
+    try {
+      if (value?.length) {
         const quantity = await axios.get("http://192.168.149.136:5000/api/product/getquantityofproduct/" + value);
-        setStock(quantity.data);
+        setStock(quantity.data.stock);
       }
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
   }
@@ -39,9 +39,9 @@ const DropdownComponent = () => {
     return { label: elm.name, value: elm.name }
   })
 
-  useEffect(()=>{
+  useEffect(() => {
     handleQuantity();
-  },[value])
+  }, [value])
 
 
 

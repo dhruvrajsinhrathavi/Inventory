@@ -28,7 +28,8 @@ const Transferpage = () => {
     console.log(stock);
 
     const handelTransfer = async () => {
-        if (inputStock > stock[0].stock) {
+        console.log(stock);
+        if (inputStock > stock) {
             console.log("nai chale");
             return;
         } else {

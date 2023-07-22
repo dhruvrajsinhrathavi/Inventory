@@ -18,18 +18,16 @@ export const AppStateContext = React.createContext();
 const App = () => {
 
   const [hideSplashScreen, setHideSplashScreen] = React.useState(true);
-  const [productName, setProductName] = React.useState("");
-  // const [fontsLoaded, error] = useFonts({
-  //   Nunito_regular: require("./assets/fonts/Nunito_Regular.ttf"),
-  //   Outfit_medium: require("./assets/fonts/Outfit_medium.ttf"),
-  //   Outfit_bold: require("./assets/fonts/Outfit_bold.ttf"),
-  //   Inter_regular: require("./assets/fonts/Inter_regular.ttf"),
-  // });
 
-  // if (!fontsLoaded && !error) {
-  //   return null;
-  // }
-  const contextValues = {productName, setProductName};
+  const [productName, setProductName] = React.useState("");
+  const [userData, setUserData] = React.useState({});
+
+  const contextValues = {
+      productName,
+      setProductName,
+      userData,
+      setUserData,
+    };
 
   return (
     <>

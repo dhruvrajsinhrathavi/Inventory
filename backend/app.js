@@ -7,7 +7,7 @@ const productRoutes = require("./routes/productRoutes");
 const userRoutes = require("./routes/userRoutes")
 
 
-app.use("/api" , productRoutes);
+app.use("/api/product" , productRoutes);
 app.use("/api/user",userRoutes);
 
 

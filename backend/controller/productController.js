@@ -7,7 +7,8 @@ exports.hellofun = (req,res) => {
 
 exports.addNewProduct = async (req,res) => {
     try{
-        const {name, desc, price, quantity, source, minQuantity, thumbnail, department} = req.body;
+
+        const {name, desc, price, quantity, source, minQuantity, thumbnail, department, currDepartment} = req.body;
         const test = new Product({
             name: name,
             descreption: desc,
@@ -16,11 +17,11 @@ exports.addNewProduct = async (req,res) => {
             minStock: minQuantity,
             source: source,
             department,
+            currDepartment,
             thumbnail: thumbnail,
         });
         console.log(test);
         const response = await test.save();
-        
         res.json({"added": true})
     } catch (err) {
         res.json(err);

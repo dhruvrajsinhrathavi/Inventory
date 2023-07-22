@@ -1,6 +1,6 @@
 const User = require("../model/userModel");
 
-exports.addUser = async(req,res)=>{
+exports.login = async(req,res)=>{
 
     const response = await  User.findOne({email: req.body.email});
 
@@ -14,4 +14,14 @@ exports.addUser = async(req,res)=>{
     } else {
         res.json({"loggedin": false});
     }
+};
+
+exports.getSpecificUser = async(req,res) => {
+    try{
+        const response = await User.findOne({email: req.params.username},{email:1,department:1});
+        res.json(response);
+    } catch(err) {
+        console.log(err);
+    }
+
 }

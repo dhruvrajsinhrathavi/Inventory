@@ -31,6 +31,10 @@ const ProductSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    currDepartment: {
+        type: String,
+        require: true,
+    },
     thumbnail: {
         type: String
     }

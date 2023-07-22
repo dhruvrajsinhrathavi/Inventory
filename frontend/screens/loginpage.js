@@ -9,22 +9,32 @@ import { BottomTabBar } from "@react-navigation/bottom-tabs";
 import { color } from "react-native-reanimated";
 import Header from '../components/comman'
 import axios from "axios";
+import { AppStateContext } from "../App";
 
 
 const Loginpage = () => {
-
   const navigation = useNavigation();
-  const [username, setUsername] = React.useState('');
+
+  const {setUserData} = React.useContext(AppStateContext);
+
+  const [usm, setUsm] = React.useState('');
   const [password, setPassword] = React.useState('');
 
   const hadelLogin = async() => {
-    if(username.length > 0) {
+    if(usm.length > 0) {
       try{
         const response = await axios.post("http://192.168.149.136:5000/api/user/login" , {
-          email:username,
+          email:usm,
           password
-        })
-        response.data.loggedin ? navigation.navigate("AndroidSmall2") : console.log("invalid credentials");;
+        });
+
+        if(response.data.loggedin) {
+          const user = await axios.get("http://192.168.149.136:5000/api/user/getSpecificUser/"+usm);
+          setUserData(user.data);
+          navigation.navigate("AndroidSmall2");
+        } else {
+          console.log("invalid credentials");
+        } 
       } catch (err) {
         console.log(err);
       }
@@ -50,9 +60,9 @@ const Loginpage = () => {
     <Text style={styles.logindetails}>Login Details</Text>
       <TextInput
         style={styles.inputtext1}
-        onChangeText={(val)=> setUsername(val)}
+        onChangeText={(val)=> setUsm(val)}
         placeholder="username or mail address"
-        value={username}
+        value={usm}
       />
       <TextInput
         style={styles.inputtext2}

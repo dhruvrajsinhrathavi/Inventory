@@ -11,12 +11,13 @@ import { AppStateContext } from "../App";
 export default function Productlayout() {
 
     const [products, setProducts] = useState([]);
+
     const {setProductName} = React.useContext(AppStateContext)
 
     const getProducts = async () => {
-        const response = await axios.get("http://192.168.149.136:5000/api/getAllProducts");
+        const response = await axios.get("http://192.168.149.136:5000/api/product/getAllProducts");
 
-        console.log(response.data);
+        // console.log(response.data);
         setProducts(response.data);
     }
 
@@ -50,70 +51,6 @@ export default function Productlayout() {
                     )
                 })}
                
-                {/* <Pressable onPress={() =>  navigation.navigate("AndroidSmall16")}>
-                    <View style={style.product}>
-                        <Image source={"https://cdn.shopify.com/s/files/1/0044/1208/0217/products/CHR2226SRB_BST_400x.jpg?v=1661147635"}
-                            style={style.imagee}
-                        />
-                        <Text style={style.text}>hello</Text>
-                    </View>
-                </Pressable>
-                <Pressable   onPress={() => navigation.navigate("AndroidSmall2")}>
-                    <View style={style.product}>
-                        <Image source={"https://cdn.shopify.com/s/files/1/0044/1208/0217/products/CHR2226SRB_BST_400x.jpg?v=1661147635"}
-                            style={style.imagee}
-                        />
-                        <Text style={style.text}>hello</Text>
-                    </View>
-                </Pressable>
-                <Pressable onPress={() =>  navigation.navigate("AndroidSmall16")}>
-                    <View style={style.product}>
-                        <Image source={"https://cdn.shopify.com/s/files/1/0044/1208/0217/products/CHR2226SRB_BST_400x.jpg?v=1661147635"}
-                            style={style.imagee}
-                        />
-                        <Text style={style.text}>hello</Text>
-                    </View>
-                </Pressable>
-                <Pressable onPress={() =>  navigation.navigate("AndroidSmall16")}>
-                    <View style={style.product}>
-                        <Image source={"https://cdn.shopify.com/s/files/1/0044/1208/0217/products/CHR2226SRB_BST_400x.jpg?v=1661147635"}
-                            style={style.imagee}
-                        />
-                        <Text style={style.text}>hello</Text>
-                    </View>
-                </Pressable>
-                <Pressable onPress={() =>  navigation.navigate("AndroidSmall16")}>
-                    <View style={style.product}>
-                        <Image source={"https://cdn.shopify.com/s/files/1/0044/1208/0217/products/CHR2226SRB_BST_400x.jpg?v=1661147635"}
-                            style={style.imagee}
-                        />
-                        <Text style={style.text}>hello</Text>
-                    </View>
-                </Pressable>
-                <Pressable onPress={() =>  navigation.navigate("AndroidSmall16")}>
-                    <View style={style.product}>
-                        <Image source={"https://cdn.shopify.com/s/files/1/0044/1208/0217/products/CHR2226SRB_BST_400x.jpg?v=1661147635"}
-                            style={style.imagee}
-                        />
-                        <Text style={style.text}>hello</Text>
-                    </View>
-                </Pressable>
-                <Pressable onPress={() =>  navigation.navigate("AndroidSmall16")}>
-                    <View style={style.product}>
-                        <Image source={"https://cdn.shopify.com/s/files/1/0044/1208/0217/products/CHR2226SRB_BST_400x.jpg?v=1661147635"}
-                            style={style.imagee}
-                        />
-                        <Text style={style.text}>hello</Text>
-                    </View>
-                </Pressable>
-                <Pressable onPress={() =>  navigation.navigate("AndroidSmall16")}>
-                    <View style={style.product}>
-                        <Image source={"https://cdn.shopify.com/s/files/1/0044/1208/0217/products/CHR2226SRB_BST_400x.jpg?v=1661147635"}
-                            style={style.imagee}
-                        />
-                        <Text style={style.text}>hello</Text>
-                    </View>
-                </Pressable> */}
 
             </View>
         </ScrollView>

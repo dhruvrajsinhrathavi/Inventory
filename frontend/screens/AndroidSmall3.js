@@ -34,10 +34,25 @@ const AndroidSmall3 = () => {
         minQuantity: data.minQuantity,
         thumbnail: data.thumbnail,
         department: data.department,
+        currDepartment: "defaut department",
       });
 
-      response.data.added === true ? console.log("New Product Added") : console.log("new product not added");
-      navigation.navigate("AndroidSmall4")
+      if(response.data.added === true) {
+        console.log("New Product Added") 
+        navigation.navigate("AndroidSmall4")
+      } else {
+        console.log("new product not added");
+        setData({
+          name: "",
+          desc: "",
+          quantity: 0,
+          minQuantity: 0,
+          price: 0,
+          source: "",
+          department: "default",
+          thumbnail: "",
+        });
+      }
 
     } catch (err) {
       console.log(err);

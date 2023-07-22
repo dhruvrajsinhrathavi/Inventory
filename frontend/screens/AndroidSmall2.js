@@ -5,9 +5,16 @@ import { useNavigation } from "@react-navigation/native";
 import { Color, Border, FontFamily, FontSize } from "../GlobalStyles";
 import styless from "./screen";
 import Header from "../components/comman";
+import { AppStateContext } from "../App";
 
 const AndroidSmall2 = () => {
   const navigation = useNavigation();
+
+  const {userData} = React.useContext(AppStateContext);
+
+  React.useEffect(()=>{
+    console.log(userData);
+  })
 
   return (
     <View style={styles.androidSmall2}>

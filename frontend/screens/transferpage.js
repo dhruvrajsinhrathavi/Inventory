@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Image } from "expo-image";
-import { StyleSheet, View, Text, Pressable, TextInput, ScrollView,DropDownPicker} from "react-native";
+import { StyleSheet, View, Text, Pressable, TextInput, ScrollView, DropDownPicker } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Border, Color, FontFamily, FontSize } from "../GlobalStyles";
 import styless from './screen';
@@ -9,24 +9,56 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import DropdownComponent from "../components/productdropdown";
 import DeparmentDropdownComponent from "../components/departmentdropdown";
 
+export const transferContext = React.createContext();
+
 const Transferpage = () => {
     const navigation = useNavigation();
+
+    const [items, setItems] = React.useState([]);
+
+    const [inputStock, setInputStock] = React.useState(Number);
+
+    const [stock, setStock] = React.useState(Number);
+
+    const value = {
+        items,
+        setItems,
+        setStock
+    }
+    console.log(stock);
+
+    const handelTransfer = async () => {
+        if (inputStock > stock[0].stock) {
+            console.log("nai chale");
+            return;
+        } else {
+            console.log("halse bhai");
+        }
+
+
+    }
+
 
     return (
         <View style={styles.exportpage}>
             <Header />
-            
+
 
 
             <KeyboardAwareScrollView style={styles.inputFields}>
                 <ScrollView >
-                <DeparmentDropdownComponent />
-                <DropdownComponent />
+                    <transferContext.Provider value={value}>
+                        <DeparmentDropdownComponent />
+                        <DropdownComponent />
+                    </transferContext.Provider>
                     <TextInput
                         style={styles.textInputs}
-                        multiline={true}
+                        // multiline={true}
+                        onChangeText={val => setInputStock(parseInt(val))}
+                        value={inputStock}
                         placeholder="Enter Quantity"
                     ></TextInput>
+
                 </ScrollView>
             </KeyboardAwareScrollView>
 
@@ -34,7 +66,11 @@ const Transferpage = () => {
             <View style={styless.nextPressable}>
                 <Pressable
                     style={styless.button}
-                    onPress={() => navigation.navigate("AndroidSmall16")}
+                    onPress={() => {
+                        handelTransfer();
+                        //navigation.navigate("AndroidSmall16")
+                    }
+                    }
                 >
                     <Text style={styless.text}>Transfer</Text>
                 </Pressable>

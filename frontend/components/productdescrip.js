@@ -13,11 +13,13 @@ export default function Productdescrip() {
     const [productDetails , setProductDetails] = React.useState({});
 
     const getDataAboutProduct = async () => {
-        const response = await axios.get("http://192.168.149.136:5000/api/product/getSpecificProduct/"+productName);
- 
-        setProductDetails(response.data);
-
-        // console.log(productDetails);
+        try{
+            const response = await axios.get("http://192.168.149.136:5000/api/getSpecificProduct/"+productName);
+            // console.log(productDetails);
+            setProductDetails(response.data);
+        } catch(err) {
+            console.log(err);
+        } 
     }
     
     React.useEffect(()=>{

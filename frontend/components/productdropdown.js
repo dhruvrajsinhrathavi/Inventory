@@ -1,22 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { transferContext } from '../screens/transferpage';
+import axios from 'axios';
 
-const data = [
-  { label: 'Item 1', value: '1' },
-  { label: 'Item 2', value: '2' },
-  { label: 'Item 3', value: '3' },
-  { label: 'Item 4', value: '4' },
-  { label: 'Item 5', value: '5' },
-  { label: 'Item 6', value: '6' },
-  { label: 'Item 7', value: '7' },
-  { label: 'Item 8', value: '8' },
-];
+
 
 const DropdownComponent = () => {
+
+  const { items,setStock } = React.useContext(transferContext);
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
+  console.log(items);
+
+  const handleQuantity = async () => {
+    try{
+      if(value?.length) {
+        const quantity = await axios.get("http://192.168.149.136:5000/api/product/getquantityofproduct/" + value);
+        setStock(quantity.data);
+      }
+    } catch(err) {
+      console.log(err);
+    }
+  }
 
   const renderLabel = () => {
     if (value || isFocus) {
@@ -28,6 +35,15 @@ const DropdownComponent = () => {
     }
     return null;
   };
+  var data = items.map(elm => {
+    return { label: elm.name, value: elm.name }
+  })
+
+  useEffect(()=>{
+    handleQuantity();
+  },[value])
+
+
 
   return (
     <View style={styles.container}>
@@ -61,8 +77,8 @@ export default DropdownComponent;
 
 const styles = StyleSheet.create({
   container: {
-   marginBottom:20
-    
+    marginBottom: 20
+
   },
   dropdown: {
     height: 50,
@@ -77,10 +93,10 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   label: {
-    color:"white",
+    color: "white",
     position: 'relative',
     backgroundColor: '#7D5A50',
-    maxWidth:"30%",
+    maxWidth: "30%",
     left: 22,
     top: 8,
     zIndex: 999,
@@ -89,7 +105,7 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 16,
-    opacity:0.4
+    opacity: 0.4
   },
   selectedTextStyle: {
     fontSize: 16,

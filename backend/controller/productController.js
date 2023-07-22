@@ -29,15 +29,47 @@ exports.addNewProduct = async (req,res) => {
 }
 
 exports.getSpecificProduct = async (req,res) => {
-    const response = await Product.findOne({name: req.params.pname});
-
-    res.json(response);
-
+    try{
+        const response = await Product.findOne({name: req.params.pname});
+        res.json(response);
+    } catch(err) {
+        console.log(err);
+    }
 }
 
 exports.getAllProduct = async (req,res) => {
-    const response = await Product.find();
+    try{
+        const response = await Product.find();
+        res.json(response);
+    } catch(err) {
+        console.log(err);
+    }
 
-    res.json(response);
+};
 
+exports.getalldepartment = async(req,res)=>{
+    try{
+        const dep = await Product.distinct("department")
+        res.json(dep);
+    } catch(err) {
+        console.log(err);
+    }
+};
+
+exports.getProductsOfDepartment = async (req,res) => {
+    try{
+        const response = await Product.find({department: req.params.pname},{name:1,_id:0});
+        res.json(response);
+    } catch(err) {
+        console.log(err);
+    }
+}
+
+exports.getquantity = async (req,res) => {
+    try{
+        const response = await Product.find({name: req.params.pname},{stock:1,_id:0});
+        res.json(response);
+    } catch(err) {
+        console.log(err);
+    }
 }

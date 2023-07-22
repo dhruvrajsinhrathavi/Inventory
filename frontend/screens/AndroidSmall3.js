@@ -25,7 +25,7 @@ const AndroidSmall3 = () => {
 
   const handelAddNewItem = async () => {
     try {
-      const response = await axios.post("http://192.168.149.136:5000/api/addNew", {
+      const response = await axios.post("http://192.168.149.136:5000/api/product/addNew", {
         name: data.name,
         desc: data.desc,
         quantity: data.quantity,

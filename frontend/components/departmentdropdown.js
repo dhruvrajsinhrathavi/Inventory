@@ -1,37 +1,71 @@
-import React, { useState } from 'react';
+import React, {  useEffect, useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import axios from 'axios';
+import { log } from 'react-native-reanimated';
+import { transferContext } from '../screens/transferpage';
 
-const data = [
-  { label: 'Item 1', value: '1' },
-  { label: 'Item 2', value: '2' },
-  { label: 'Item 3', value: '3' },
-  { label: 'Item 4', value: '4' },
-  { label: 'Item 5', value: '5' },
-  { label: 'Item 6', value: '6' },
-  { label: 'Item 7', value: '7' },
-  { label: 'Item 8', value: '8' },
-];
+
+
+
 
 const DeparmentDropdownComponent = () => {
-  const [value, setValue] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
 
-  const renderLabel = () => {
-    if (value || isFocus) {
-      return (
-        <Text style={[styles.label,]}>
-          Department
-        </Text>
-      );
+  const {setItems} = React.useContext(transferContext);
+  const [department,setdepartment] = useState([])
+  const [value, setValue] = useState("");
+
+  const getdepartment = async()=>{
+    try{
+      const response = await axios.get("http://192.168.149.136:5000/api/product/getdepartment");
+      setdepartment(response.data);
+    } catch(err) {
+      console.log(err);
     }
-    return null;
   };
+
+  const handelGetItems = async () => {
+    try{
+      if(value.length > 0) {
+        const response = await axios.get("http://192.168.149.136:5000/api/product/getAllProductsOfDepartment/"+value);
+        setItems(response.data);
+      }
+    } catch(err) {
+      console.log(err);
+    }
+  }
+
+  // const renderLabel = () => {
+  //   if (value || isFocus) {
+  //     return (
+  //       <Text style={[styles.label,]}>
+  //         Department
+  //       </Text>
+  //     );
+  //   }
+  //   return null;
+  // };
+
+  useEffect(()=>{
+    getdepartment();
+  },[]);
+
+  useEffect(()=>{
+    handelGetItems();
+  },[value]);
+
+  const data = [
+    ...department.map(elm => {
+      return(
+        {label: elm, value: elm}
+      )
+    })
+  ];
 
   return (
     <View style={styles.container}>
-      {renderLabel()}
+      {/* {renderLabel()} */}
       <Dropdown
         style={[styles.dropdown]}
         placeholderStyle={styles.placeholderStyle}
@@ -43,14 +77,16 @@ const DeparmentDropdownComponent = () => {
         maxHeight={300}
         labelField="label"
         valueField="value"
-        placeholder={!isFocus ? 'Select Department' : '...'}
+        placeholder={'Select Department'}
         searchPlaceholder="Search..."
         value={value}
-        onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(false)}
+        // onFocus={() => setIsFocus(true)}
+        // onBlur={() => setIsFocus(false)}
         onChange={item => {
-          setValue(item.value);
-          setIsFocus(false);
+
+        setValue(item.value);
+        // handelGetItems();
+          // setIsFocus(false);
         }}
       />
     </View>

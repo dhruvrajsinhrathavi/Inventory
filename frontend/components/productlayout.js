@@ -15,10 +15,13 @@ export default function Productlayout() {
     const {setProductName} = React.useContext(AppStateContext)
 
     const getProducts = async () => {
-        const response = await axios.get("http://192.168.149.136:5000/api/product/getAllProducts");
-
-        // console.log(response.data);
-        setProducts(response.data);
+        try{
+            const response = await axios.get("http://192.168.149.136:5000/api/product/getAllProducts");
+            // console.log(response.data);
+            setProducts(response.data);
+        } catch(err) {
+            console.log(err);
+        }
     }
 
     useEffect(() => {

@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 import { Image } from "expo-image";
 import { TextInput } from "react-native-gesture-handler";
-import { StyleSheet, View, Pressable, Text,Alert} from "react-native";
+import { StyleSheet, View, Pressable, Text, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Border, Color, FontFamily, FontSize } from "../GlobalStyles";
 import { BottomTabBar } from "@react-navigation/bottom-tabs";
@@ -15,26 +15,28 @@ import { AppStateContext } from "../App";
 const Loginpage = () => {
   const navigation = useNavigation();
 
-  const {setUserData} = React.useContext(AppStateContext);
+  const { setUserData, setotherd, userData } = React.useContext(AppStateContext);
 
   const [usm, setUsm] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const hadelLogin = async() => {
-    if(usm.length > 0) {
-      try{
-        const response = await axios.post("http://192.168.149.136:5000/api/user/login" , {
-          email:usm,
+
+  const hadelLogin = async () => {
+    if (usm.length > 0) {
+      try {
+        const response = await axios.post("http://192.168.155.136:5000/api/user/login", {
+          email: usm,
           password
         });
 
-        if(response.data.loggedin) {
-          const user = await axios.get("http://192.168.149.136:5000/api/user/getSpecificUser/"+usm);
+        if (response.data.loggedin) {
+          const user = await axios.get("http://192.168.155.136:5000/api/user/getSpecificUser/" + usm);
           setUserData(user.data);
+          console.log(user.data);
           navigation.navigate("AndroidSmall2");
         } else {
           console.log("invalid credentials");
-        } 
+        }
       } catch (err) {
         console.log(err);
       }
@@ -42,58 +44,59 @@ const Loginpage = () => {
   }
 
 
-    return (
+  return (
     <View style={styles.androidSmall1}>
 
-    <Header />
-    
-    <View style={styles.loginImgContainer}>
-      <Image 
-      style={styles.loginimg}
-        contentFit="contain"
-        source={require("../assets/loginimg.png")}
-      />
-    </View>
+      <Header />
+
+      <View style={styles.loginImgContainer}>
+        <Image
+          style={styles.loginimg}
+          contentFit="contain"
+          source={require("../assets/loginimg.png")}
+        />
+      </View>
 
 
-    <View style={styles.textInputContainer}>
-    <Text style={styles.logindetails}>Login Details</Text>
-      <TextInput
-        style={styles.inputtext1}
-        onChangeText={(val)=> setUsm(val)}
-        placeholder="username or mail address"
-        value={usm}
-      />
-      <TextInput
-        style={styles.inputtext2}
-        onChangeText={(val)=> setPassword(val)}
-        placeholder="password"
-        value={password}
-      /> 
-    </View>
-    {/* <ImageBackground
+      <View style={styles.textInputContainer}>
+        <Text style={styles.logindetails}>Login Details</Text>
+        <TextInput
+          style={styles.inputtext1}
+          onChangeText={(val) => setUsm(val)}
+          placeholder="username or mail address"
+          value={usm}
+        />
+        <TextInput
+          style={styles.inputtext2}
+          onChangeText={(val) => setPassword(val)}
+          placeholder="password"
+          value={password}
+        />
+      </View>
+      {/* <ImageBackground
       source={require("../assets/footerimg.png")}
       style={{width: "100%"}}
     > */}
       <View style={styles.nextPressable}>
-        <Pressable style={styles.button} 
-          onPress={()=>{
-              hadelLogin();
+        <Pressable style={styles.button}
+          onPress={() => {
+            hadelLogin();
+            // console.log(response)
           }}
         >
           <Text style={styles.text} color="white">Login</Text>
         </Pressable>
       </View>
-    {/* </ImageBackground> */}
-    {/* <View style={styles.footerimgContainer}>
+      {/* </ImageBackground> */}
+      {/* <View style={styles.footerimgContainer}>
       <ImageBackground
         style={styles.footerimg}
         contentFit="cover"
         source={require("../assets/footerimg.png")}
       />
     </View> */}
-  </View>
-  
+    </View>
+
   );
 };
 
@@ -113,8 +116,8 @@ const styles = StyleSheet.create({
   },
   loginimg: {
     // flex: 1,
-    height:"80%",
-    width:"80%",
+    height: "80%",
+    width: "80%",
     Maxheight: "100%",
     Maxwidth: '100%',
     alignSelf: "center",
@@ -123,7 +126,7 @@ const styles = StyleSheet.create({
     width: "90%",
     height: "20%",
     alignSelf: "center",
-    justifyContent:"center",
+    justifyContent: "center",
     alignItems: "center",
     marginBottom: "20%"
   },
@@ -133,7 +136,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: "5%",
     borderRadius: 8,
-    textAlign:"center",
+    textAlign: "center",
   },
   inputtext2: {
     width: "100%",
@@ -157,7 +160,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     position: "absolute",
     alignSelf: "center",
-    textAlign:"center",
+    textAlign: "center",
     bottom: "3%",
     color: "white",
   },
@@ -168,9 +171,9 @@ const styles = StyleSheet.create({
   text: {
     textAlign: "center",
     color: "white",
-    fontSize:18
+    fontSize: 18
   }
-  
+
 });
 
 export default Loginpage;

@@ -19,6 +19,10 @@ const ProductSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    currStock: {
+        type: Number,
+        required: true,
+    },
     minStock: {
         type: Number,
         required: true,
@@ -29,11 +33,11 @@ const ProductSchema = new mongoose.Schema({
     },
     department: {
         type: String,
-        required: true
+        required: true,
     },
-    currDepartment: {
-        type: String,
-        require: true,
+    otherDepartment: {
+        type: Array,
+        default: []
     },
     thumbnail: {
         type: String

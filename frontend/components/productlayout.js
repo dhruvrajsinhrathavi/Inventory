@@ -1,9 +1,9 @@
 import * as React from "react";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Image } from "expo-image";
 import { ScrollView, TextInput } from "react-native-gesture-handler";
-import { StyleSheet, View, Pressable, Text, Alert,} from "react-native";
-import { useNavigation ,navigate} from "@react-navigation/native";
+import { StyleSheet, View, Pressable, Text, Alert, } from "react-native";
+import { useNavigation, navigate } from "@react-navigation/native";
 import { FontSize } from "../GlobalStyles";
 import axios from "axios";
 import { AppStateContext } from "../App";
@@ -12,24 +12,27 @@ export default function Productlayout() {
 
     const [products, setProducts] = useState([]);
 
-    const {setProductName} = React.useContext(AppStateContext)
+    const { setProductName, otherd, userData } = React.useContext(AppStateContext)
 
     const getProducts = async () => {
-        try{
-            const response = await axios.get("http://192.168.149.136:5000/api/product/getAllProducts");
-            // console.log(response.data);
-            setProducts(response.data);
-        } catch(err) {
+        try {
+            otherd.map(async elm => {
+                console.log(elm);
+                const response = await axios.get("http://192.168.155.136:5000/api/product/getProductsOfDepartment/" + elm.name);
+                console.log(response.data);
+                setProducts(prev => [...response.data]);
+            })
+
+        } catch (err) {
             console.log(err);
         }
     }
+    // console.log(products);
 
     useEffect(() => {
-      getProducts();
+        getProducts();
     }, [])
-    
 
-    
     const navigation = useNavigation();
 
 
@@ -38,9 +41,9 @@ export default function Productlayout() {
         <ScrollView style={style.scroll} >
             <View style={style.productlay}>
 
-                {products.map(key=>{
+                {products.map(key => {
                     return (
-                        <Pressable onPress={() =>  {
+                        <Pressable onPress={() => {
                             setProductName(key.name)
                             navigation.navigate("AndroidSmall16")
                         }}>
@@ -50,10 +53,10 @@ export default function Productlayout() {
                                 />
                                 <Text style={style.text}>{key.name}</Text>
                             </View>
-                    </Pressable>
+                        </Pressable>
                     )
                 })}
-               
+
 
             </View>
         </ScrollView>
@@ -107,6 +110,5 @@ const style = StyleSheet.create({
         textAlignVertical: "center",
         color: "white",
         fontSize: 22
-
     }
 })

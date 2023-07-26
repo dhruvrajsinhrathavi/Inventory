@@ -4,6 +4,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { transferContext } from '../screens/transferpage';
 import axios from 'axios';
+import { AppStateContext } from '../App';
 
 
 
@@ -12,23 +13,28 @@ const DropdownComponent = () => {
   const { items, setStock } = React.useContext(transferContext);
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
-  console.log(items);
+   const { setProductName } = React.useContext(AppStateContext);
+  // console.log(items);
 
   const handleQuantity = async () => {
     try {
       if (value?.length) {
-        const quantity = await axios.get("http://192.168.149.136:5000/api/product/getquantityofproduct/" + value);
+        const quantity = await axios.get("http://192.168.125.136:5000/api/product/getspecificproduct/" + value);
         setStock(quantity.data.stock);
+        setProductName(quantity.data.name);
+        // console.log(quantity.data.name);
       }
     } catch (err) {
       console.log(err);
     }
   }
 
+
+
   const renderLabel = () => {
     if (value || isFocus) {
       return (
-        <Text style={[styles.label,]}>
+        <Text style={[styles.label]}>
           product
         </Text>
       );
@@ -66,6 +72,7 @@ const DropdownComponent = () => {
         onBlur={() => setIsFocus(false)}
         onChange={item => {
           setValue(item.value);
+          setProductName(item.value);
           setIsFocus(false);
         }}
       />

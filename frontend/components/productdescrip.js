@@ -9,23 +9,23 @@ import { log } from "react-native-reanimated";
 
 export default function Productdescrip() {
 
-    const {productName} = React.useContext(AppStateContext);
-    const [productDetails , setProductDetails] = React.useState({});
+    const { productName } = React.useContext(AppStateContext);
+    // console.log(productName +" "+ "hellooooooo");
+    const [productDetails, setProductDetails] = React.useState({});
 
     const getDataAboutProduct = async () => {
-        try{
-            const response = await axios.get("http://192.168.149.136:5000/api/getSpecificProduct/"+productName);
-            // console.log(productDetails);
+        try {
+            const response = await axios.get("http://192.168.125.136:5000/api/product/getSpecificProduct/" + productName);
+            // console.log(response.data);
             setProductDetails(response.data);
-        } catch(err) {
+        } catch (err) {
             console.log(err);
-        } 
+        }
     }
-    
-    React.useEffect(()=>{
+
+    React.useEffect(() => {
         getDataAboutProduct();
-        // console.log(productDetails);
-    },[]);
+    }, []);
 
 
     return (
@@ -34,49 +34,49 @@ export default function Productdescrip() {
             <View style={style.productlay}>
                 <Pressable>
                     <View style={style.product}>
-                    <View style={style.textbg}>
-                        <Text style={{color:"white"}}>Product Name</Text>
-                    </View>
+                        <View style={style.textbg}>
+                            <Text style={{ color: "white" }}>Product Name</Text>
+                        </View>
                         <Text style={style.text}>{productName}</Text>
                     </View>
                 </Pressable>
                 <Pressable>
                     <View style={style.product}>
-                    <View style={style.textbg}>
-                        <Text style={{color:"white"}}>product quantity</Text>
-                    </View>
+                        <View style={style.textbg}>
+                            <Text style={{ color: "white" }}>product quantity</Text>
+                        </View>
                         <Text style={style.text}>{productDetails?.stock}</Text>
                     </View>
                 </Pressable>
                 <Pressable>
                     <View style={style.product}>
-                    <View style={style.textbg}>
-                        <Text style={{color:"white"}}>product description</Text>
-                    </View>
+                        <View style={style.textbg}>
+                            <Text style={{ color: "white" }}>product description</Text>
+                        </View>
                         <Text style={style.text}>{productDetails?.descreption}</Text>
                     </View>
                 </Pressable>
                 <Pressable>
                     <View style={style.product}>
-                    <View style={style.textbg}>
-                        <Text style={{color:"white"}}>product price</Text>
-                    </View>
+                        <View style={style.textbg}>
+                            <Text style={{ color: "white" }}>product price</Text>
+                        </View>
                         <Text style={style.text}>{productDetails?.price}</Text>
                     </View>
                 </Pressable>
                 <Pressable>
                     <View style={style.product}>
-                    <View style={style.textbg}>
-                        <Text style={{color:"white"}}>minimum stock</Text>
-                    </View>
+                        <View style={style.textbg}>
+                            <Text style={{ color: "white" }}>minimum stock</Text>
+                        </View>
                         <Text style={style.text}>{productDetails?.minStock}</Text>
                     </View>
                 </Pressable>
                 <Pressable>
                     <View style={style.product}>
-                    <View style={style.textbg}>
-                        <Text style={{color:"white"}}>product source</Text>
-                    </View>
+                        <View style={style.textbg}>
+                            <Text style={{ color: "white" }}>product source</Text>
+                        </View>
                         <Text style={style.text}>{productDetails?.source}</Text>
                     </View>
                 </Pressable>
@@ -115,7 +115,7 @@ const style = StyleSheet.create({
     product: {
         display: "flex",
         flexDirection: "row",
-        flexWrap:"wrap",
+        flexWrap: "wrap",
         backgroundColor: "#B4846C",
         height: "100%",
         // maxHeight: "50%",
@@ -131,21 +131,21 @@ const style = StyleSheet.create({
     text: {
         marginLeft: "30%",
         marginRight: "10%",
-        marginTop:"4%",
+        marginTop: "4%",
         textAlignVertical: "center",
         color: "white",
         fontSize: 22
 
     },
-    textbg:{
-        backgroundColor:"#7D5A50",
-        paddingLeft:"5%",
-        paddingRight:"5%",
-        paddingTop:"1%",
-        marginRight:"20%",
-        height:30,
-        color:"white",
+    textbg: {
+        backgroundColor: "#7D5A50",
+        paddingLeft: "5%",
+        paddingRight: "5%",
+        paddingTop: "1%",
+        marginRight: "20%",
+        height: 30,
+        color: "white",
         // Maxheight:"30%",
-        Naxwidth:"50%"
+        Naxwidth: "50%"
     }
 })

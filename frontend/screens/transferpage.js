@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Image } from "expo-image";
-import { StyleSheet, View, Text, Pressable, TextInput, ScrollView, DropDownPicker } from "react-native";
+import { StyleSheet, View, Text, Pressable, TextInput, ScrollView, Alert, ToastAndroid } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Border, Color, FontFamily, FontSize } from "../GlobalStyles";
 import styless from './screen';
@@ -8,6 +8,8 @@ import Header from "../components/comman";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import DropdownComponent from "../components/productdropdown";
 import DeparmentDropdownComponent from "../components/departmentdropdown";
+import { AppStateContext } from "../App";
+import axios from "axios";
 
 export const transferContext = React.createContext();
 
@@ -16,36 +18,65 @@ const Transferpage = () => {
 
     const [items, setItems] = React.useState([]);
 
+    const { productName } = React.useContext(AppStateContext);
+
     const [inputStock, setInputStock] = React.useState(Number);
 
     const [stock, setStock] = React.useState(Number);
+
+    const [confirm, setConfirm] = React.useState(false);
 
     const value = {
         items,
         setItems,
         setStock
     }
-    console.log(stock);
 
-    const handelTransfer = async () => {
+    const call = async () => {
+        console.log("halse bhai");
+        const response = await axios.post("http://192.168.149.136:5000/api/product/setquantity", {
+            newStock: inputStock,
+            pname: productName,
+            oldStock: stock,
+        });
+        console.log(response.data);
+        navigation.navigate("AndroidSmall16");
+    }
+
+    const showToastWithGravity = () => {
+        ToastAndroid.showWithGravity(
+            'Only This much stock is available',
+            ToastAndroid.SHORT,
+            ToastAndroid.CENTER,
+
+        );
+    };
+
+
+    const handelTransfer = () => {
         console.log(stock);
         if (inputStock > stock) {
             console.log("nai chale");
+            showToastWithGravity();
             return;
         } else {
-            console.log("halse bhai");
+            Alert.alert('Alert Title', 'My Alert Msg', [
+                {
+                    text: 'Cancel',
+                    // onPress: () => showToastWithGravity(),
+                    style: 'cancel',
+                },
+                {
+                    text: 'OK', onPress: () => call(),
+                }
+            ]);
         }
-
-
     }
 
 
     return (
         <View style={styles.exportpage}>
             <Header />
-
-
-
             <KeyboardAwareScrollView style={styles.inputFields}>
                 <ScrollView >
                     <transferContext.Provider value={value}>
@@ -54,7 +85,6 @@ const Transferpage = () => {
                     </transferContext.Provider>
                     <TextInput
                         style={styles.textInputs}
-                        // multiline={true}
                         onChangeText={val => setInputStock(parseInt(val))}
                         value={inputStock}
                         placeholder="Enter Quantity"
@@ -69,7 +99,6 @@ const Transferpage = () => {
                     style={styless.button}
                     onPress={() => {
                         handelTransfer();
-                        //navigation.navigate("AndroidSmall16")
                     }
                     }
                 >

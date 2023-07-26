@@ -1,4 +1,4 @@
-import React, {  useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -12,26 +12,26 @@ import { transferContext } from '../screens/transferpage';
 
 const DeparmentDropdownComponent = () => {
 
-  const {setItems} = React.useContext(transferContext);
-  const [department,setdepartment] = useState([])
+  const { setItems } = React.useContext(transferContext);
+  const [department, setdepartment] = useState([])
   const [value, setValue] = useState("");
 
-  const getdepartment = async()=>{
-    try{
-      const response = await axios.get("http://192.168.149.136:5000/api/product/getdepartment");
+  const getdepartment = async () => {
+    try {
+      const response = await axios.get("http://192.168.125.136:5000/api/product/getdepartment");
       setdepartment(response.data);
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
   };
 
   const handelGetItems = async () => {
-    try{
-      if(value.length > 0) {
-        const response = await axios.get("http://192.168.149.136:5000/api/product/getAllProductsOfDepartment/"+value);
+    try {
+      if (value.length > 0) {
+        const response = await axios.get("http://192.168.125.136:5000/api/product/getAllProductsOfDepartment/" + value);
         setItems(response.data);
       }
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
   }
@@ -47,18 +47,18 @@ const DeparmentDropdownComponent = () => {
   //   return null;
   // };
 
-  useEffect(()=>{
+  useEffect(() => {
     getdepartment();
-  },[]);
+  }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     handelGetItems();
-  },[value]);
+  }, [value]);
 
   const data = [
     ...department.map(elm => {
-      return(
-        {label: elm, value: elm}
+      return (
+        { label: elm, value: elm }
       )
     })
   ];
@@ -84,8 +84,8 @@ const DeparmentDropdownComponent = () => {
         // onBlur={() => setIsFocus(false)}
         onChange={item => {
 
-        setValue(item.value);
-        // handelGetItems();
+          setValue(item.value);
+          // handelGetItems();
           // setIsFocus(false);
         }}
       />
@@ -97,8 +97,8 @@ export default DeparmentDropdownComponent;
 
 const styles = StyleSheet.create({
   container: {
-   marginBottom:20
-    
+    marginBottom: 20
+
   },
   dropdown: {
     height: 50,
@@ -113,10 +113,10 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   label: {
-    color:"white",
+    color: "white",
     position: 'relative',
     backgroundColor: '#7D5A50',
-    maxWidth:"40%",
+    maxWidth: "40%",
     left: 22,
     top: 8,
     zIndex: 999,
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 16,
-    opacity:0.4
+    opacity: 0.4
   },
   selectedTextStyle: {
     fontSize: 16,

@@ -21,62 +21,65 @@ const App = () => {
 
   const [productName, setProductName] = React.useState("");
   const [userData, setUserData] = React.useState({});
+  const [otherd, setotherd] = React.useState([]);
 
   const contextValues = {
-      productName,
-      setProductName,
-      userData,
-      setUserData,
-    };
+    productName,
+    setProductName,
+    userData,
+    setUserData,
+    setotherd,
+    otherd,
+  };
 
   return (
     <>
       <NavigationContainer>
         <AppStateContext.Provider value={contextValues}>
-        {hideSplashScreen ? (
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen
-              name="loginpage"
-              component={loginpage}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="AndroidSmall2"
-              component={AndroidSmall2}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="AndroidSmall4"
-              component={AndroidSmall4}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="AndroidSmall16"
-              component={AndroidSmall16}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="AndroidSmall5"
-              component={AndroidSmall5}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="AndroidSmall3"
-              component={AndroidSmall3}
-              options={{ headerShown: false }}
-            />
-             <Stack.Screen
-              name="exportpage"
-              component={Exportpage}
-              options={{ headerShown: false }}
-            />
-             <Stack.Screen
-              name="transferpage"
-              component={Transferpage}
-              options={{ headerShown: false }}
-            />
-          </Stack.Navigator>
-        ) : null}
+          {hideSplashScreen ? (
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+              <Stack.Screen
+                name="loginpage"
+                component={loginpage}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="AndroidSmall2"
+                component={AndroidSmall2}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="AndroidSmall4"
+                component={AndroidSmall4}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="AndroidSmall16"
+                component={AndroidSmall16}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="AndroidSmall5"
+                component={AndroidSmall5}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="AndroidSmall3"
+                component={AndroidSmall3}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="exportpage"
+                component={Exportpage}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="transferpage"
+                component={Transferpage}
+                options={{ headerShown: false }}
+              />
+            </Stack.Navigator>
+          ) : null}
         </AppStateContext.Provider>
       </NavigationContainer>
     </>

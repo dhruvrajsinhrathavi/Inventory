@@ -19,13 +19,14 @@ const AndroidSmall3 = () => {
     minQuantity: 0,
     price: 0,
     source: "",
-    department: "default",
+    department: "all",
     thumbnail: "",
   });
 
   const handelAddNewItem = async () => {
     try {
-      const response = await axios.post("http://192.168.149.136:5000/api/product/addNew", {
+      console.log("hello");
+      const response = await axios.post("http://192.168.155.136:5000/api/product/addNew", {
         name: data.name,
         desc: data.desc,
         quantity: data.quantity,
@@ -33,12 +34,12 @@ const AndroidSmall3 = () => {
         source: data.source,
         minQuantity: data.minQuantity,
         thumbnail: data.thumbnail,
+        // otherDepartment: [{ count: 30, name: "all" }],
         department: data.department,
-        currDepartment: "defaut department",
       });
 
-      if(response.data.added === true) {
-        console.log("New Product Added") 
+      if (response.data.added === true) {
+        console.log("New Product Added")
         navigation.navigate("AndroidSmall4")
       } else {
         console.log("new product not added");
@@ -49,7 +50,7 @@ const AndroidSmall3 = () => {
           minQuantity: 0,
           price: 0,
           source: "",
-          department: "default",
+          department: "all",
           thumbnail: "",
         });
       }
@@ -104,14 +105,16 @@ const AndroidSmall3 = () => {
             multiline={false}
             placeholder="Enter Quantity"
             value={data.quantity}
-            onChangeText={(v) => setData({ ...data, quantity: parseInt(v) })}
+            keyboardType="numeric"
+            onChangeText={(v) => setData({ ...data, quantity: (v) })}
           ></TextInput>
           <TextInput
             style={styles.textInputs}
             multiline={false}
             placeholder="Enter Price"
             value={data.price}
-            onChangeText={(v) => setData({ ...data, price: parseInt(v) })}
+            keyboardType="numeric"
+            onChangeText={(v) => setData({ ...data, price: (v) })}
           ></TextInput>
           <TextInput
             style={styles.textInputs}
@@ -125,7 +128,8 @@ const AndroidSmall3 = () => {
             multiline={false}
             placeholder="Minimun Quantity"
             value={data.minQuantity}
-            onChangeText={(v) => setData({ ...data, minQuantity: parseInt(v) })}
+            keyboardType="numeric"
+            onChangeText={(v) => setData({ ...data, minQuantity: (v) })}
           ></TextInput>
         </ScrollView>
       </KeyboardAwareScrollView>
